@@ -1,0 +1,21 @@
+version: '2.0'
+services:
+    postgresql:
+        image: postgres
+        container_name: postgres
+        environment:
+                - POSTGRES_USER=modbot
+                - POSTGRES_PASSWORD=postgres
+                - POSTGRES_DB=modtools
+        volumes:
+          - '/root/modtools/data:/var/lib/postgresql/data'
+        expose:
+            - "5432"
+    python:
+        container_name: python
+        build:
+            context: "modtools"
+        depends_on:
+            - "postgresql"
+        volumes: 
+            - './modtools:/app'
